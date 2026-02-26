@@ -13,12 +13,12 @@ This repository contains a Spring Boot microservice system that demonstrates the
 
 **Business services**
 
-- **User Service** (`user-service`)
-- **Product Service** (`product-service`)
-- **Order Service** (`order-service`)
-- **Payment Service** (`payment-service`)
-- **Delivery Service** (`delivery-service`)
-- **Saga Service** (`saga-service`)
+- **User Service** (`userservice`)
+- **Product Service** (`productservice`)
+- **Order Service** (`orderservice`)
+- **Payment Service** (`paymentservice`)
+- **Delivery Service** (`deliveryservice`)
+- **Saga Service** (`sagaservice`)
 
 ## Prerequisites
 
