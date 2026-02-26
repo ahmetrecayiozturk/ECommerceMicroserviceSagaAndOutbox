@@ -1,0 +1,68 @@
+package com.ecommerce.productservice.api.controller;
+
+import com.ecommerce.productservice.api.ProductCreateRequest;
+import com.ecommerce.productservice.api.ProductUpdateRequest;
+import com.ecommerce.productservice.application.service.ProductApplicationService;
+import com.ecommerce.productservice.domain.aggregate.Product;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.core.env.Environment;
+
+import java.io.IOException;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/product")
+public class ProductController {
+
+    private final ProductApplicationService productApplicationService;
+    private final Environment environment;
+
+    public ProductController(ProductApplicationService productApplicationService, Environment environment) {
+        this.productApplicationService = productApplicationService;
+        this.environment = environment;
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<String> addProduct(@RequestBody ProductCreateRequest productCreateRequest) throws IOException {
+            productApplicationService.addProduct(productCreateRequest);
+            return ResponseEntity.ok("Product added successfully");
+    }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<String> updateProduct(@RequestBody ProductUpdateRequest productUpdateRequest) throws IOException {
+        productApplicationService.updateProduct(productUpdateRequest);
+        return ResponseEntity.ok("Product updated successfully");
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/get-all")
+    public ResponseEntity<List<Product>> getAllProducts() {
+        return ResponseEntity.ok((List<Product>) productApplicationService.getAllProducts());
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<Product>> getProductsByFilter(@RequestParam(required = false) String category) {
+        List<Product> products = productApplicationService.getProductsByFilter(category);
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/get-by-id/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        Product product = productApplicationService.getProductById(id);
+        if (product != null) {
+            return ResponseEntity.ok(product);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/health-check")
+    public ResponseEntity<String> healthCheck() {
+        String port = environment.getProperty("local.server.port");
+        String msg = "Product Service is up and running on port: " + port;
+        System.out.println(msg);
+        return ResponseEntity.ok(msg);
+    }
+}

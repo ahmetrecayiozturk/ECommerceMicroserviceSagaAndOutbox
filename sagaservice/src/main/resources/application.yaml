@@ -1,0 +1,31 @@
+server:
+  port: 8020
+
+spring:
+  application:
+    name: saga-service
+
+  datasource:
+    url: jdbc:postgresql://postgres:5432/sagadb
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  kafka:
+    bootstrap-servers: kafka:9092
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eurekaserver:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+my_secret_key: ${MY_SECRET_KEY}
+myExpirationTime: ${MY_EXPIRATION_TIME:3600000}
