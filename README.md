@@ -43,7 +43,7 @@ docker compose down -v
 ## Service Ports
 
 | Service | Port |
-| --- | --- |
+| ---- | ---- |
 | API Gateway | `8080` |
 | Eureka Server | `8761` |
 | Product Service | `8090` |
@@ -60,7 +60,7 @@ docker compose down -v
 All traffic should go through the API Gateway:
 
 | Route Prefix | Service |
-| --- | --- |
+| ---- | ---- |
 | `/product/**` | Product Service |
 | `/order/**` | Order Service |
 | `/payment/**` | Payment Service |
@@ -79,7 +79,7 @@ http://localhost:8080/product/api/product
 You can override defaults by creating a `.env` file or exporting variables before running Docker Compose:
 
 | Variable | Default | Description |
-| --- | --- | --- |
+| ---- | ---- | ---- |
 | `POSTGRES_USER` | `ecommerce` | Database username |
 | `POSTGRES_PASSWORD` | `ecommerce` | Database password |
 | `MY_SECRET_KEY` | `change-me` | JWT signing secret |
