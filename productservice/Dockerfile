@@ -6,11 +6,13 @@ COPY gradle gradle
 COPY build.gradle settings.gradle ./
 COPY src src
 
-RUN chmod +x ./gradlew && ./gradlew clean bootJar -x test
+RUN chmod +x ./gradlew && ./gradlew clean bootJar -x test \
+    && JAR_FILE=$(ls /app/build/libs/*.jar | grep -v plain | head -n 1) \
+    && cp "$JAR_FILE" /app/app.jar
 
 FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY --from=build /app/app.jar app.jar
 
 EXPOSE 8090
-ENTRYPOINT ["sh", "-c", "java -jar /app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
