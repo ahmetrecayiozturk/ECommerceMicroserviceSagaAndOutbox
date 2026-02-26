@@ -11,6 +11,8 @@ This repository contains a Spring Boot microservice system that demonstrates the
 - **Kafka + Zookeeper**: Event streaming backbone for the Saga/Outbox flow.
 - **PostgreSQL**: Shared database server with separate databases per service.
 
+Kafka is the messaging layer between services: each service publishes domain events and consumes saga commands over Kafka topics.
+
 **Business services**
 
 - **User Service** (`userservice`)
